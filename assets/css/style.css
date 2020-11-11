@@ -31,11 +31,49 @@ main {
 }
 
 #add-btn {
+  color: rgb(224, 223, 223);
+  border: 2px solid white;
+  border-radius: 10%;
+  background-color: rgb(7, 233, 158);
   height: 2rem;
   width: 5rem;
   margin-left: 10px;
+  cursor: pointer;
+}
+#add-btn:hover {
+  background-color: rgb(32, 199, 143);
 }
 
 .todo-list li {
   list-style: none;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 10px;
+  margin: 10px 10px;
+  font-size: 1.5rem;
+  background-color: beige;
+}
+
+.todo-edit,
+.todo-delete {
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.todo-edit {
+  color: rgb(209, 206, 23);
+}
+.todo-edit:hover {
+  color: rgb(167, 164, 16);
+}
+.todo-delete {
+  color: rgb(236, 55, 55);
+
+  margin-left: 1rem;
+}
+.todo-delete:hover {
+  color: rgb(189, 27, 27);
 }
