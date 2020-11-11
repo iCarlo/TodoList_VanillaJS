@@ -35,3 +35,7 @@ main {
   width: 5rem;
   margin-left: 10px;
 }
+
+.todo-list li {
+  list-style: none;
+}
