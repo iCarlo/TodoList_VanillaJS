@@ -2,11 +2,12 @@ const userInput = document.querySelector('#user-input')
 const addBtn = document.querySelector('#add-btn')
 const todoList = document.querySelector('.todo-list')
 
+let data = ''
 
 
 addBtn.addEventListener('click', (e) => {
-    e.preventDefault()
-    if (userInput.value) {
+    // e.preventDefault()
+    if (userInput.value && addBtn.innerText == 'Add') {
         const newItem = userInput.value
         const todoItem = `<div class="todo-item"><span>${newItem}</span><div class="todo-actions"><button data-todo=${newItem} class="todo-edit" type="button"><i class="fas fa-edit"></i></button><button data-todo=${newItem} class="todo-delete" type="button"><i class="fas fa-trash-alt"></i></button></div></div>`
 
@@ -16,6 +17,21 @@ addBtn.addEventListener('click', (e) => {
         // afterbegin - append as first child
         // beforeend - append as last child
         todoList.insertAdjacentHTML("afterbegin", todoItem)
+        userInput.value = null
+
+
+    } else if (userInput.value && addBtn.innerText == 'Edit') {
+        const newTodo = userInput.value
+        const todos = document.getElementsByClassName('todo-item')
+        const EditItem = Array.from(todos).find(x => x.innerText === data)
+
+        const spanText = EditItem.children[0]
+        spanText.innerText = newTodo
+
+        const todoActions = EditItem.children[1].children
+        Array.from(todoActions).forEach(action => action.setAttribute('data-todo', newTodo))
+
+        addBtn.innerText = 'Add'
         userInput.value = null
 
     }
@@ -36,6 +52,10 @@ const deleteTodo = (e) => {
     const todos = document.getElementsByClassName('todo-item')
     const deleteItem = Array.from(todos).find(x => x.innerText === query)
     deleteItem.remove()
+}
 
-
+const editTodo = (e) => {
+    data = e.target.getAttribute('data-todo')
+    userInput.value = data
+    addBtn.innerText = 'Edit'
 }
