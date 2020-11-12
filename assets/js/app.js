@@ -4,16 +4,23 @@ const todoList = document.querySelector('.todo-list')
 
 let data = ''
 
+const savedTodos = JSON.parse(localStorage.getItem('todos'))
+
+if (savedTodos) {
+    savedTodos.map(todo => todoList.insertAdjacentHTML("afterbegin", todo))
+}
+
+
 
 addBtn.addEventListener('click', (e) => {
     e.preventDefault()
     if (userInput.value && addBtn.innerText == 'Add') {
         const newItem = userInput.value
         const dataItem = newItem.replaceAll(' ', '-')
-        const todoItem = `<div class="todo-item"><span>${newItem}</span><div class="todo-actions"><button data-todo=${dataItem} class="todo-edit" type="button"><i class="fas fa-edit"></i></button><button data-todo=${dataItem} class="todo-delete" type="button"><i class="fas fa-trash-alt"></i></button></div></div>`
+        const todoItem = `<li><div class="todo-item"><span>${newItem}</span><div class="todo-actions"><button data-todo=${dataItem} class="todo-edit" type="button"><i class="fas fa-edit"></i></button><button data-todo=${dataItem} class="todo-delete" type="button"><i class="fas fa-trash-alt"></i></button></div></div></li>`
 
-        const listItem = document.createElement('li')
-        listItem.innerHTML = todoItem
+        const savedTodos = JSON.parse(localStorage.getItem('todos')) || []
+        localStorage.setItem('todos', JSON.stringify([...savedTodos, todoItem]))
 
         // afterbegin - append as first child
         // beforeend - append as last child
@@ -36,6 +43,7 @@ addBtn.addEventListener('click', (e) => {
         userInput.value = null
 
     }
+
 })
 
 
