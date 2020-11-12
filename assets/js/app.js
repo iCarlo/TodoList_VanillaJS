@@ -17,7 +17,7 @@ addBtn.addEventListener('click', (e) => {
     if (userInput.value && addBtn.innerText == 'Add') {
         const newItem = userInput.value
         const dataItem = newItem.replaceAll(' ', '-')
-        const todoItem = `<li><div class="todo-item"><span>${newItem}</span><div class="todo-actions"><button data-todo=${dataItem} class="todo-edit" type="button"><i class="fas fa-edit"></i></button><button data-todo=${dataItem} class="todo-delete" type="button"><i class="fas fa-trash-alt"></i></button></div></div></li>`
+        const todoItem = `<div class="todo-item"><span>${newItem}</span><div class="todo-actions"><button data-todo=${dataItem} class="todo-edit" type="button"><i class="fas fa-edit"></i></button><button data-todo=${dataItem} class="todo-delete" type="button"><i class="fas fa-trash-alt"></i></button></div></div>`
 
         const savedTodos = JSON.parse(localStorage.getItem('todos')) || []
         localStorage.setItem('todos', JSON.stringify([...savedTodos, todoItem]))
@@ -38,6 +38,9 @@ addBtn.addEventListener('click', (e) => {
 
         const todoActions = EditItem.children[1].children
         Array.from(todoActions).forEach(action => action.setAttribute('data-todo', newTodo.replaceAll(' ', '-')))
+
+        const updateItems = Array.from(todos).map(x => x.outerHTML)
+        localStorage.setItem('todos', JSON.stringify(updateItems))
 
         addBtn.innerText = 'Add'
         userInput.value = null
@@ -61,6 +64,10 @@ const deleteTodo = (e) => {
     const todos = document.getElementsByClassName('todo-item')
     const deleteItem = Array.from(todos).find(x => x.innerText === query)
     deleteItem.remove()
+
+    const updateItems = Array.from(todos).map(x => x.outerHTML)
+    localStorage.setItem('todos', JSON.stringify(updateItems))
+
 }
 
 const editTodo = (e) => {
